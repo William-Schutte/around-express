@@ -1,17 +1,27 @@
-# Around the U.S. Front End + Back End
+# Project 12-14: Around The U.S. Back End
+## William Schutte
+## September 2020
+Practicum by Yandex
+-----
 
-## Directories
+### Overview
+This project represents work from the 12th, 13th, and 14th projects for the web-dev course. These projects required setting
+up a backend framework using Node.js and Express.js. The server has a custom API connecting the previous front-end React 
+project to this back-end project.
 
-`/public` — static files from the build of the React front-end app.
+    Project 13:
+    Project 12: Initial setup of Express.js, file structure, and routing
 
-`/data` — JSON files to temporarily emulate database integration.
+### Techniques
+This server uses Express.js for launching on Local Port 3000
+Internally, the site is designed under BEM methodology.
 
-`/routes` — routing files.
+### Technologies
+* Express.js
+* Node.js
+* Git/GitHub
 
-All other directories are optional and may be created by the developer if necessary. 
 
 ## Running the Project
-
 `npm run start` — to launch the server.
-
 `npm run dev` — to launch the server with the hot reload feature.
