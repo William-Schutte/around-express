@@ -13,7 +13,7 @@ project to this back-end project.
     Project 12: Initial setup of Express.js, file structure, and routing
 
 ### Techniques
-This server uses Express.js for launching on Local Port 3000
+This server uses Express.js for launching on Local Port 3000.
 Internally, the site is designed under BEM methodology.
 
 ### Technologies
@@ -21,7 +21,12 @@ Internally, the site is designed under BEM methodology.
 * Node.js
 * Git/GitHub
 
-
 ## Running the Project
 `npm run start` — to launch the server.
 `npm run dev` — to launch the server with the hot reload feature.
+
+## Revisions:
+
+# First Review: 9/9/20
+* Added "Resource not found" message to app.js to catch all errant urls
+* Instead of importing JSON data with require(), used Node's fs module and readFile() method

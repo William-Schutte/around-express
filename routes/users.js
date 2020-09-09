@@ -1,5 +1,13 @@
 const routes = require('express').Router();
-const users = require('../data/users.json');
+const fs = require('fs');
+const path = require('path');
+
+let users = '';
+
+fs.readFile(path.join(__dirname, '../data/users.json'), { encoding: 'utf8' }, (err, data) => {
+  if (err) console.log(err);
+  users = JSON.parse(data);
+});
 
 const doesUserExist = (req, res) => {
   if (!users.some((user) => user._id === req.params.id)) {

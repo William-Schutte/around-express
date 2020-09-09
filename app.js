@@ -9,6 +9,9 @@ const app = express();
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/users', usersRouter);
 app.use('/cards', cardsRouter);
+app.get('*', (req, res) => {
+  res.status(404).send({ "message": "Requested resource not found" });
+});
 
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
