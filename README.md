@@ -27,6 +27,15 @@ Internally, the site is designed under BEM methodology.
 
 ## Revisions:
 
+# Second Review: 9/10/20
+* Fixed route files:
+  * Removed extra null route handlers
+  * Used fs promises for data reading
+  * Added status 200 to all successful responses
+  * Rewrote file paths using path.join correctly
+  * Added error handling to promises that notifies users
+  
+
 # First Review: 9/9/20
 * Added "Resource not found" message to app.js to catch all errant urls
 * Instead of importing JSON data with require(), used Node's fs module and readFile() method

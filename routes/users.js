@@ -1,30 +1,31 @@
 const routes = require('express').Router();
-const fs = require('fs');
+const fs = require('fs').promises;
 const path = require('path');
 
-let users = '';
+const usersPath = path.join(__dirname, '..', 'data', 'users.json');
 
-fs.readFile(path.join(__dirname, '../data/users.json'), { encoding: 'utf8' }, (err, data) => {
-  if (err) console.log(err);
-  users = JSON.parse(data);
-});
+const getData = (dataPath) => fs.readFile(dataPath, { encoding: 'utf8' })
+  .then((data) => JSON.parse(data))
+  .catch((err) => console.log(err));
 
-const doesUserExist = (req, res) => {
-  if (!users.some((user) => user._id === req.params.id)) {
-    res.status(404).send({ "message": 'User ID not found' });
-  } else {
-    res.send(users.filter((user) => user._id === req.params.id)[0]);
-  }
+const getUsers = (req, res) => getData(usersPath)
+  .then((users) => res.status(200).send(users))
+  .catch((err) => res.status(400).send(err));
+
+const getUserById = (req, res) => {
+  getData(usersPath)
+    .then((users) => {
+      if (!users.some((user) => user._id === req.params.id)) {
+        res.status(404).send({ "message": 'User ID not found' });
+      } else {
+        res.status(200).send(users.filter((user) => user._id === req.params.id)[0]);
+      }
+    })
+    .catch((err) => res.status(400).send(err));
 };
 
-routes.get('/', (req, res) => {
-  res.send(users);
-});
+routes.get('/', getUsers);
 
-routes.get('/:id', doesUserExist);
-
-routes.get('*', (req, res) => {
-  res.send({ "message": "Requested resource not found" }, 404);
-});
+routes.get('/:id', getUserById);
 
 module.exports = routes;

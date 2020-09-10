@@ -1,20 +1,17 @@
 const routes = require('express').Router();
-const fs = require('fs');
+const fs = require('fs').promises;
 const path = require('path');
 
-let cards = '';
+const cardsPath = path.join(__dirname, '..', 'data', 'cards.json');
 
-fs.readFile(path.join(__dirname, '../data/cards.json'), { encoding: 'utf8' }, (err, data) => {
-  if (err) console.log(err);
-  cards = JSON.parse(data);
-});
+const getData = (dataPath) => fs.readFile(dataPath, { encoding: 'utf8' })
+  .then((data) => JSON.parse(data))
+  .catch((err) => console.log(err));
 
-routes.get('/', (req, res) => {
-  res.send(cards);
-});
+const getCards = (req, res) => getData(cardsPath)
+  .then((cards) => res.status(200).send(cards))
+  .catch((err) => res.status(400).send(err));
 
-routes.get('*', (req, res) => {
-  res.send({ "message": "Requested resource not found" }, 404);
-});
+routes.get('/', getCards);
 
 module.exports = routes;
