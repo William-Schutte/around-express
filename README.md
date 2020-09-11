@@ -27,6 +27,9 @@ Internally, the site is designed under BEM methodology.
 
 ## Revisions:
 
+# Third Review: 9/11/20
+* Addressed error handling for server-side file reading by changing promises in both cards.js and users.js, errors now print to user
+
 # Second Review: 9/10/20
 * Fixed route files:
   * Removed extra null route handlers
@@ -35,7 +38,6 @@ Internally, the site is designed under BEM methodology.
   * Rewrote file paths using path.join correctly
   * Added error handling to promises that notifies users
   
-
 # First Review: 9/9/20
 * Added "Resource not found" message to app.js to catch all errant urls
 * Instead of importing JSON data with require(), used Node's fs module and readFile() method
