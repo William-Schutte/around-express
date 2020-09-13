@@ -7,14 +7,13 @@ Practicum by Yandex
 ### Overview
 This project represents work from the 12th, 13th, and 14th projects for the web-dev course. These projects required setting
 up a backend framework using Node.js and Express.js. The server has a custom API connecting the previous front-end React 
-project to this back-end project.
+project (public folder; transcompiled w/ Create-React-App, Web-Pack, Babel) to this back-end project.
 
     Project 13:
     Project 12: Initial setup of Express.js, file structure, and routing
 
 ### Techniques
-This server uses Express.js for launching on Local Port 3000.
-Internally, the site is designed under BEM methodology.
+This server uses Express.js, launching on Local Port 3000.
 
 ### Technologies
 * Express.js
@@ -26,6 +25,9 @@ Internally, the site is designed under BEM methodology.
 `npm run dev` — to launch the server with the hot reload feature.
 
 ## Revisions:
+
+# Fourth Review: 9/13/20
+* Changed error response codes to 500 for file read errors in cards.js and users.js
 
 # Third Review: 9/11/20
 * Addressed error handling for server-side file reading by changing promises in both cards.js and users.js, errors now print to user

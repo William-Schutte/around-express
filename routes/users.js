@@ -6,7 +6,7 @@ const usersPath = path.join(__dirname, '..', 'data', 'users.json');
 
 const getUsers = (req, res) => fs.readFile(usersPath, { encoding: 'utf8' })
   .then((users) => res.status(200).send(JSON.parse(users)))
-  .catch((err) => res.status(404).send({ "message": 'Error reading data', "serverError": err }));
+  .catch((err) => res.status(500).send({ "message": 'Error reading data', "serverError": err }));
 
 const getUserById = (req, res) => {
   fs.readFile(usersPath, { encoding: 'utf8' })
