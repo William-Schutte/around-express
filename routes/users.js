@@ -1,28 +1,18 @@
 const routes = require('express').Router();
-const fs = require('fs').promises;
-const path = require('path');
+const bodyParser = require('body-parser');
 
-const usersPath = path.join(__dirname, '..', 'data', 'users.json');
-
-const getUsers = (req, res) => fs.readFile(usersPath, { encoding: 'utf8' })
-  .then((users) => res.status(200).send(JSON.parse(users)))
-  .catch((err) => res.status(500).send({ "message": 'Error reading data', "serverError": err }));
-
-const getUserById = (req, res) => {
-  fs.readFile(usersPath, { encoding: 'utf8' })
-    .then((users) => {
-      const userData = JSON.parse(users);
-      if (!userData.some((user) => user._id === req.params.id)) {
-        res.status(404).send({ "message": 'User ID not found' });
-      } else {
-        res.status(200).send(userData.filter((user) => user._id === req.params.id)[0]);
-      }
-    })
-    .catch((err) => res.status(404).send({ "message": 'Error reading data', "serverError": err }));
-};
+const { getUsers, getUserById, createUser } = require('../controllers/users');
 
 routes.get('/', getUsers);
-
 routes.get('/:id', getUserById);
+routes.post('/', bodyParser.json(), createUser);
 
 module.exports = routes;
+
+/* REFERENCE NOTES
+routes = A mini-application capable of performing middleware and routing functions
+fs = A node.js module that enables interacting with files. Was initially using this module
+  to read static data files to test Express.js functionality. Since removed.
+bodyParser = A node.js module for parsing data from request bodies, JSON in this case
+routes.get = Executes the given middleware function when an HTTP GET request is sent to path
+*/
