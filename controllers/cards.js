@@ -43,4 +43,36 @@ const deleteCard = (req, res) => {
     });
 };
 
-module.exports = { getCards, createCard, deleteCard };
+const likeCard = (req, res) => {
+  Card.findByIdAndUpdate(
+    req.params.cardId,
+    { $addToSet: { likes: req.user._id } },
+    { new: true },
+  )
+    .then(((card) => res.send({ data: card })))
+    .catch((err) => {
+      const e = errorMessage(err);
+      return res.status(e.errStatus).send({ message: e.errMessage });
+    });
+};
+
+const unlikeCard = (req, res) => {
+  Card.findByIdAndUpdate(
+    req.params.cardId,
+    { $pull: { likes: req.user._id } },
+    { new: true },
+  )
+    .then(((card) => res.send({ data: card })))
+    .catch((err) => {
+      const e = errorMessage(err);
+      return res.status(e.errStatus).send({ message: e.errMessage });
+    });
+};
+
+module.exports = {
+  getCards,
+  createCard,
+  deleteCard,
+  likeCard,
+  unlikeCard,
+};

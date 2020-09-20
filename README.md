@@ -6,8 +6,9 @@ Practicum by Yandex
 
 ### Overview
 This project represents work from the 12th, 13th, and 14th projects for the web-dev course. These projects required setting
-up a backend framework using Node.js and Express.js. The server has a custom API connecting the previous front-end React 
-project (public folder; transcompiled w/ Create-React-App, Web-Pack, Babel) to this back-end project.
+up a backend framework using Node.js and Express.js as well as a database with MongoDB. The server has a custom API connecting
+the previous front-end React project (public folder; transcompiled w/ Create-React-App, Web-Pack, Babel) to this back-end 
+project.
 
     Project 13: RESTful API desing, MongoDB setup, Basic authorization
     Project 12: Initial setup of Express.js, file structure, and routing

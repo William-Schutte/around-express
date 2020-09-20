@@ -43,7 +43,33 @@ const createUser = (req, res) => {
     });
 };
 
-module.exports = { getUsers, getUserById, createUser };
+const updateUser = (req, res) => {
+  const { name, about } = req.body;
+  User.findByIdAndUpdate(req.user._id, { name, about })
+    .then(((user) => res.send({ data: user })))
+    .catch((err) => {
+      const e = errorMessage(err);
+      return res.status(e.errStatus).send({ message: e.errMessage });
+    });
+};
+
+const updateAvatar = (req, res) => {
+  const { avatar } = req.body;
+  User.findByIdAndUpdate(req.user._id, { avatar })
+    .then(((user) => res.send({ data: user })))
+    .catch((err) => {
+      const e = errorMessage(err);
+      return res.status(e.errStatus).send({ message: e.errMessage });
+    });
+};
+
+module.exports = {
+  getUsers,
+  getUserById,
+  createUser,
+  updateUser,
+  updateAvatar,
+};
 
 /* REFERENCE NOTES
 These controller functions, also called the last middleware (they do not call next() but instead
