@@ -4,10 +4,7 @@ const errorMessage = (err) => {
   let errStatus = 500;
   let errMessage = err.name;
 
-  if (errMessage === 'ValidationError') {
-    errStatus = 400;
-    errMessage = err.message;
-  } else if (errMessage === 'CastError') {
+  if (errMessage === 'CastError') {
     errStatus = 404;
     errMessage = 'User not found';
   }
@@ -26,7 +23,13 @@ const getUsers = (req, res) => {
 
 const getUserById = (req, res) => {
   User.findById(req.params.id)
-    .then((user) => res.send({ data: user }))
+    .then((user) => {
+      if (user) {
+        res.send({ data: user });
+      } else {
+        res.status(404).send({ message: 'User not found' });
+      }
+    })
     .catch((err) => {
       const e = errorMessage(err);
       return res.status(e.errStatus).send({ message: e.errMessage });
@@ -38,8 +41,11 @@ const createUser = (req, res) => {
   User.create({ name, about, avatar })
     .then(((user) => res.send({ data: user })))
     .catch((err) => {
-      const e = errorMessage(err);
-      return res.status(e.errStatus).send({ message: e.errMessage });
+      if (err.name === 'ValidationError') {
+        res.status(400).send({ message: 'User validation failed' });
+      } else {
+        res.status(500).send({ message: 'Internal server error' });
+      }
     });
 };
 

@@ -5,16 +5,17 @@ Practicum by Yandex
 -----
 
 ### Overview
-This project represents work from the 12th, 13th, and 14th projects for the web-dev course. These projects required setting
-up a backend framework using Node.js and Express.js as well as a database with MongoDB. The server has a custom API connecting
-the previous front-end React project (public folder; transcompiled w/ Create-React-App, Web-Pack, Babel) to this back-end 
-project.
+This project represents work from the 12th, 13th, and 14th projects for the web-dev course. These
+projects build upon each other, first setting up a server with Node.js and Express.js, then 
+integrating with a MongoDB database. The server has a custom RESTful API connecting it to my
+previous front-end React project (transcompiled w/ Create-React-App, Web-Pack, Babel).
 
-    Project 13: RESTful API desing, MongoDB setup, Basic authorization
-    Project 12: Initial setup of Express.js, file structure, and routing
+  Project 13: RESTful API desing, MongoDB setup, Basic authorization
+  Project 12: Initial setup of Express.js, file structure, and routing
 
 ### Techniques
 This server uses Express.js, launching on Local Port 3000.
+Mongoose used for models and MongoDB interactions.
 
 ### Technologies
 * Express.js
@@ -25,10 +26,19 @@ This server uses Express.js, launching on Local Port 3000.
 `npm run start` — to launch the server.
 `npm run dev` — to launch the server with the hot reload feature.
 
+## My best friends:
+  [Mongoose Documentation](https://mongoosejs.com/docs/guides.html)
+  [Express.JS Documentation](https://expressjs.com/en/5x/api.html)
+  [Node.JS Documentation](https://nodejs.org/api/)
+
 # Revisions:
 
-## Project 13: First Review: 9/**/20
-* 
+## Project 13: First Review: 9/21/20
+* Added period to middle of URL regex to catch more invalid URLs
+* Explicitly defined error handling in createCard and createUser functions
+* Modified getUserById() function to return error if findById() returns null data
+  * Note: When using Mongoose's findById() method, if the given ID param is of the 
+    expected length, it will return null instead of an error
 
 ## Project 12: Fourth Review: 9/13/20
 * Changed error response codes to 500 for file read errors in cards.js and users.js

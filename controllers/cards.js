@@ -2,12 +2,9 @@ const Card = require('../models/card');
 
 const errorMessage = (err) => {
   let errStatus = 500;
-  let errMessage = err.name;
+  let errMessage = 'Internal server error';
 
-  if (errMessage === 'ValidationError') {
-    errStatus = 400;
-    errMessage = err.message;
-  } else if (errMessage === 'CastError') {
+  if (err.name === 'CastError') {
     errStatus = 404;
     errMessage = 'Card not found';
   }
@@ -29,8 +26,11 @@ const createCard = (req, res) => {
   Card.create({ name, link, owner: req.user._id })
     .then(((card) => res.send({ data: card })))
     .catch((err) => {
-      const e = errorMessage(err);
-      return res.status(e.errStatus).send({ message: e.errMessage });
+      if (err.name === 'ValidationError') {
+        res.status(400).send({ message: 'Card validation failed' });
+      } else {
+        res.status(500).send({ message: 'Internal server error' });
+      }
     });
 };
 
