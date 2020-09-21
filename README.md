@@ -27,9 +27,9 @@ Mongoose used for models and MongoDB interactions.
 `npm run dev` — to launch the server with the hot reload feature.
 
 ## My best friends:
-  [Mongoose Documentation](https://mongoosejs.com/docs/guides.html)
-  [Express.JS Documentation](https://expressjs.com/en/5x/api.html)
-  [Node.JS Documentation](https://nodejs.org/api/)
+1. [Mongoose Documentation](https://mongoosejs.com/docs/guides.html)
+1. [Express.JS Documentation](https://expressjs.com/en/5x/api.html)
+1. [Node.JS Documentation](https://nodejs.org/api/)
 
 # Revisions:
 
