@@ -10,14 +10,16 @@ projects build upon each other, first setting up a server with Node.js and Expre
 integrating with a MongoDB database. The server has a custom RESTful API connecting it to my
 previous front-end React project (transcompiled w/ Create-React-App, Web-Pack, Babel).
 
-  #### **Project 13:** RESTful API desing, MongoDB setup, Basic authorization
-  #### **Project 12:** Initial setup of Express.js, file structure, and routing
+  **Project 13:** RESTful API desing, MongoDB setup, Basic authorization  
+  **Project 12:** Initial setup of Express.js, file structure, and routing  
 
 ### Techniques
 This server uses Express.js, launching on Local Port 3000.  
 Mongoose used for models and MongoDB interactions.
 
 ### Technologies
+* Mongoose
+* MongoDB
 * Express.js
 * Node.js
 * Git/GitHub
