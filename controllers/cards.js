@@ -35,7 +35,7 @@ const createCard = (req, res) => {
 };
 
 const deleteCard = (req, res) => {
-  Card.findByIdAndRemove(req.params.cardId)
+  Card.findOneAndRemove({ _id: req.params.cardId, owner: req.user._id })
     .then(((card) => res.send({ data: card })))
     .catch((err) => {
       const e = errorMessage(err);

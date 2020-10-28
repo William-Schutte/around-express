@@ -10,7 +10,7 @@ projects build upon each other, first setting up a server with Node.js and Expre
 integrating with a MongoDB database. The server has a custom RESTful API connecting it to my
 previous front-end React project (transcompiled w/ Create-React-App, Web-Pack, Babel).
 
-  **Project 15:** Backend user auth.
+  **Project 15:** Backend user login/creation, middleware auth.,
   **Project 14:** Frontend features on React-Around-Auth repo, login/register pages, user auth.
   **Project 13:** RESTful API desing, MongoDB setup, Basic authorization  
   **Project 12:** Initial setup of Express.js, file structure, and routing  

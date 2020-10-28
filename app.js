@@ -1,10 +1,11 @@
 // Express and Application Entry Point File
-
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
 const usersRouter = require('./routes/users.js');
 const cardsRouter = require('./routes/cards.js');
+const { login, createUser } = require('./controllers/users');
+const auth = require('./middleware/auth');
 
 const { PORT = 3000 } = process.env;
 const app = express();
@@ -15,13 +16,12 @@ mongoose.connect('mongodb://localhost:27017/aroundb', {
   useFindAndModify: false,
 });
 
-app.use((req, res, next) => {
-  req.user = {
-    _id: '5f6640d464c43c68ed325583',
-  };
-  next();
-});
+// These are the default routes and do not require a user to be logged in, i.e. auth
+app.post('/signin', login);
+app.post('/signup', createUser);
 
+// The following routes WILL require a user to be logged in and authenticated
+app.use(auth);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/users', usersRouter);
 app.use('/cards', cardsRouter);

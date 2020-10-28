@@ -4,7 +4,6 @@ const bodyParser = require('body-parser');
 const {
   getUsers,
   getUserById,
-  createUser,
   updateUser,
   updateAvatar,
 } = require('../controllers/users');
@@ -13,7 +12,7 @@ routes.get('/', getUsers);
 routes.patch('/me', bodyParser.json(), updateUser);
 routes.patch('/me/avatar', bodyParser.json(), updateAvatar);
 routes.get('/:id', getUserById);
-routes.post('/', bodyParser.json(), createUser);
+// routes.post('/', bodyParser.json(), createUser);
 
 module.exports = routes;
 

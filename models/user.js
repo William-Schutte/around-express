@@ -39,11 +39,12 @@ const userSchema = new mongoose.Schema({
   password: {
     required: true,
     type: String,
+    select: false,
   },
 });
 
 userSchema.statics.findUserByCredentials = function (email, password) {
-  return this.findOne({ email }).then((user) => {
+  return this.findOne({ email }).select('+password').then((user) => {
     if (!user) {
       return Promise.reject(new Error('Incorrect email/password'));
     }
@@ -61,6 +62,10 @@ module.exports = mongoose.model('user', userSchema);
 /* REFERENCE NOTES
 Schema's are used by mongoose to validate data being sent to the database. Schemas must first
 be turned into a model to be applied to entries.
+
+Note in the password field the use of the select property. When false, this field will not be
+returned on any query of the user. To get the password when searching documents, append the
+.select('+password') method to the Mongoose method as in findUserByCredentials() above.
 
 The statics property allows a function/method that exists directly on the user model instead
 of just on the schema to which it belongs.
