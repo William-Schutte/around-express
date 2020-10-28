@@ -1,4 +1,4 @@
-# Project 12-14: Around The U.S. Back End
+# Project 12-15: Around The U.S. Back End
 ## William Schutte
 ## September 2020
 Practicum by Yandex
@@ -10,6 +10,8 @@ projects build upon each other, first setting up a server with Node.js and Expre
 integrating with a MongoDB database. The server has a custom RESTful API connecting it to my
 previous front-end React project (transcompiled w/ Create-React-App, Web-Pack, Babel).
 
+  **Project 15:** Backend user auth.
+  **Project 14:** Frontend features on React-Around-Auth repo, login/register pages, user auth.
   **Project 13:** RESTful API desing, MongoDB setup, Basic authorization  
   **Project 12:** Initial setup of Express.js, file structure, and routing  
 
