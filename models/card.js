@@ -14,7 +14,7 @@ const cardSchema = new mongoose.Schema({
       validator(v) {
         return RegExp(/^(https?):\/\/(www\.)?[\w-@:%\+~#=]+[.][\.\w/\-?#=&~@:()!$\+%]*$/gm).test(v);
       },
-      message: 'Invalid URL',
+      message: 'Invalid Image URL',
     },
   },
   owner: {

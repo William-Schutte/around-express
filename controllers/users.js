@@ -1,93 +1,77 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
+const NotFoundError = require('../errors/notfound-err');
 
-const errorMessage = (err) => {
-  let errStatus = 500;
-  let errMessage = err.name;
-
-  if (errMessage === 'CastError') {
-    errStatus = 404;
-    errMessage = 'User not found';
-  }
-
-  return { errStatus, errMessage };
-};
-
-const getUsers = (req, res) => {
+// Is this function necessary anymore?
+const getUsers = (req, res, next) => {
   User.find({})
     .then((users) => res.send({ data: users }))
-    .catch((err) => {
-      const e = errorMessage(err);
-      return res.status(e.errStatus).send({ message: e.errMessage });
-    });
+    .catch(next);
 };
 
-const getUserById = (req, res) => {
+const getUserById = (req, res, next) => {
   User.findById(req.params.id)
     .then((user) => {
       if (user) {
         res.send({ data: user });
       } else {
-        res.status(404).send({ message: 'User not found' });
+        throw new NotFoundError('User not found');
       }
     })
-    .catch((err) => {
-      const e = errorMessage(err);
-      return res.status(e.errStatus).send({ message: e.errMessage });
-    });
+    .catch(next);
 };
 
-const createUser = (req, res) => {
+// Error handling?
+const createUser = (req, res, next) => {
   const { name, about, avatar, email } = req.body;
 
   bcrypt.hash(req.body.password, 10).then((hash) => {
     User.create({ name, about, avatar, email, password: hash })
       .then(((user) => res.send({ data: user })))
-      .catch((err) => {
-        if (err.name === 'ValidationError') {
-          res.status(400).send({ message: 'User validation failed' });
-        } else {
-          res.status(500).send({ message: 'Internal server error' });
-        }
-      });
+      .catch(next);
   });
 };
 
-const login = (req, res) => {
+const login = (req, res, next) => {
   const { email, password } = req.body;
-  User.findUserByCredentials(email, password).then((user) => {
-    const token = jwt.sign(
-      { _id: user._id },
-      'secret_key',
-      { expiresIn: '7d' },
-    );
-
-    res.cookie('token', token, { httpOnly: true });
-    res.send({ token });
-  }).catch((err) => {
-    res.status(401).send({ message: err.message });
-  });
+  User.findUserByCredentials(email, password)
+    .then((user) => {
+      const token = jwt.sign(
+        { _id: user._id },
+        'secret_key',
+        { expiresIn: '7d' },
+      );
+      res.cookie('token', token, { httpOnly: true });
+      res.send({ token });
+    })
+    .catch(next);
 };
 
-const updateUser = (req, res) => {
+const updateUser = (req, res, next) => {
   const { name, about } = req.body;
   User.findByIdAndUpdate(req.user._id, { name, about })
-    .then(((user) => res.send({ data: user })))
-    .catch((err) => {
-      const e = errorMessage(err);
-      return res.status(e.errStatus).send({ message: e.errMessage });
-    });
+    .then((user) => {
+      if (user) {
+        res.send({ data: user });
+      } else {
+        throw new NotFoundError('User not found');
+      }
+    })
+    .catch(next);
 };
 
-const updateAvatar = (req, res) => {
+const updateAvatar = (req, res, next) => {
   const { avatar } = req.body;
   User.findByIdAndUpdate(req.user._id, { avatar })
-    .then(((user) => res.send({ data: user })))
-    .catch((err) => {
-      const e = errorMessage(err);
-      return res.status(e.errStatus).send({ message: e.errMessage });
-    });
+    .then((user) => {
+      if (user) {
+        res.send({ data: user });
+      } else {
+        throw new NotFoundError('User not found');
+      }
+    })
+    .catch(next);
 };
 
 module.exports = {

@@ -2,10 +2,12 @@
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
+const { errors } = require('celebrate');
 const usersRouter = require('./routes/users.js');
 const cardsRouter = require('./routes/cards.js');
 const { login, createUser } = require('./controllers/users');
 const auth = require('./middleware/auth');
+const { requestLogger, errorLogger } = require('./middleware/logger');
 
 const { PORT = 3000 } = process.env;
 const app = express();
@@ -15,6 +17,9 @@ mongoose.connect('mongodb://localhost:27017/aroundb', {
   useCreateIndex: true,
   useFindAndModify: false,
 });
+
+// Logs all requests to the server
+app.use(requestLogger);
 
 // These are the default routes and do not require a user to be logged in, i.e. auth
 app.post('/signin', login);
@@ -27,6 +32,15 @@ app.use('/users', usersRouter);
 app.use('/cards', cardsRouter);
 app.get('*', (req, res) => {
   res.status(404).send({ message: 'Requested resource not found' });
+});
+
+app.use(errorLogger);
+app.use(errors());
+app.use((err, req, res, next) => {
+  const { statusCode = 500, message } = err;
+  res.status(statusCode).send({
+    message: (statusCode === 500) ? 'Server error' : message,
+  });
 });
 
 app.listen(PORT, () => {

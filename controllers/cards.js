@@ -1,72 +1,48 @@
+const NotFoundError = require('../errors/notfound-err');
 const Card = require('../models/card');
 
-const errorMessage = (err) => {
-  let errStatus = 500;
-  let errMessage = 'Internal server error';
-
-  if (err.name === 'CastError') {
-    errStatus = 404;
-    errMessage = 'Card not found';
-  }
-
-  return { errStatus, errMessage };
-};
-
-const getCards = (req, res) => {
+const getCards = (req, res, next) => {
   Card.find({})
     .then((cards) => res.send({ data: cards }))
-    .catch((err) => {
-      const e = errorMessage(err);
-      return res.status(e.errStatus).send({ message: e.errMessage });
-    });
+    .catch(next);
 };
 
-const createCard = (req, res) => {
+const createCard = (req, res, next) => {
   const { name, link } = req.body;
   Card.create({ name, link, owner: req.user._id })
     .then(((card) => res.send({ data: card })))
-    .catch((err) => {
-      if (err.name === 'ValidationError') {
-        res.status(400).send({ message: 'Card validation failed' });
-      } else {
-        res.status(500).send({ message: 'Internal server error' });
-      }
-    });
+    .catch(next);
 };
 
-const deleteCard = (req, res) => {
+const deleteCard = (req, res, next) => {
   Card.findOneAndRemove({ _id: req.params.cardId, owner: req.user._id })
-    .then(((card) => res.send({ data: card })))
-    .catch((err) => {
-      const e = errorMessage(err);
-      return res.status(e.errStatus).send({ message: e.errMessage });
-    });
+    .then((card) => {
+      if (!card) {
+        throw new NotFoundError('Card does not belong to user');
+      }
+      res.send({ data: card });
+    })
+    .catch(next);
 };
 
-const likeCard = (req, res) => {
+const likeCard = (req, res, next) => {
   Card.findByIdAndUpdate(
     req.params.cardId,
     { $addToSet: { likes: req.user._id } },
     { new: true },
   )
     .then(((card) => res.send({ data: card })))
-    .catch((err) => {
-      const e = errorMessage(err);
-      return res.status(e.errStatus).send({ message: e.errMessage });
-    });
+    .catch(next);
 };
 
-const unlikeCard = (req, res) => {
+const unlikeCard = (req, res, next) => {
   Card.findByIdAndUpdate(
     req.params.cardId,
     { $pull: { likes: req.user._id } },
     { new: true },
   )
     .then(((card) => res.send({ data: card })))
-    .catch((err) => {
-      const e = errorMessage(err);
-      return res.status(e.errStatus).send({ message: e.errMessage });
-    });
+    .catch(next);
 };
 
 module.exports = {

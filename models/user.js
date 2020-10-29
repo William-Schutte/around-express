@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
+const LoginError = require('../errors/login-err');
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -22,7 +23,7 @@ const userSchema = new mongoose.Schema({
       validator(v) {
         return RegExp(/^(https?):\/\/(www\.)?[\w-@:%\+~#=]+[.][\.\w/\-?#=&~@:()!$\+%]*$/gm).test(v);
       },
-      message: 'Invalid URL',
+      message: 'Invalid Image URL',
     },
   },
   email: {
@@ -33,7 +34,7 @@ const userSchema = new mongoose.Schema({
       validator(v) {
         return validator.isEmail(v);
       },
-      message: 'Invalid email',
+      message: 'Invalid Email',
     },
   },
   password: {
@@ -46,11 +47,11 @@ const userSchema = new mongoose.Schema({
 userSchema.statics.findUserByCredentials = function (email, password) {
   return this.findOne({ email }).select('+password').then((user) => {
     if (!user) {
-      return Promise.reject(new Error('Incorrect email/password'));
+      return Promise.reject(new LoginError('Incorrect email/password'));
     }
     return bcrypt.compare(password, user.password).then((matched) => {
       if (!matched) {
-        return Promise.reject(new Error('Incorrect email/password'));
+        return Promise.reject(new LoginError('Incorrect email/password'));
       }
       return user;
     });

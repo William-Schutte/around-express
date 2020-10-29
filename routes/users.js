@@ -1,5 +1,6 @@
 const routes = require('express').Router();
 const bodyParser = require('body-parser');
+const { celebrate, Joi } = require('celebrate');
 
 const {
   getUsers,
@@ -9,10 +10,19 @@ const {
 } = require('../controllers/users');
 
 routes.get('/', getUsers);
-routes.patch('/me', bodyParser.json(), updateUser);
-routes.patch('/me/avatar', bodyParser.json(), updateAvatar);
 routes.get('/:id', getUserById);
-// routes.post('/', bodyParser.json(), createUser);
+
+routes.patch('/me', bodyParser.json(), celebrate({
+  body: Joi.object().keys({
+    name: Joi.string().required().min(2).max(30),
+    about: Joi.string().required().min(2),
+  }),
+}), updateUser);
+routes.patch('/me/avatar', bodyParser.json(), celebrate({
+  body: Joi.object().keys({
+    avatar: Joi.string().required(),
+  }),
+}), updateAvatar);
 
 module.exports = routes;
 
