@@ -4,6 +4,7 @@ const path = require('path');
 const mongoose = require('mongoose');
 const { errors } = require('celebrate');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 const usersRouter = require('./routes/users.js');
 const cardsRouter = require('./routes/cards.js');
 const { login, createUser } = require('./controllers/users');
@@ -21,7 +22,7 @@ mongoose.connect('mongodb://localhost:27017/aroundb', {
 
 // Logs all requests to the server
 app.use(requestLogger);
-
+app.use(cors());
 // Server crash testing function for review
 app.get('/crash-test', () => {
   setTimeout(() => {
