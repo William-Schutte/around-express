@@ -23,6 +23,7 @@ mongoose.connect('mongodb://localhost:27017/aroundb', {
 const corsOptions = {
   origin: ['https://ws.p15.students.nomoreparties.site/', 'https://www.ws.p15.students.nomoreparties.site/'],
   credentials: true,
+  preflightContinue: true,
 };
 
 app.use(cors(corsOptions));
