@@ -20,7 +20,12 @@ mongoose.connect('mongodb://localhost:27017/aroundb', {
   useFindAndModify: false,
 });
 
-app.use(cors());
+const corsOptions = {
+  origin: ['https://ws.p15.students.nomoreparties.site/', 'https://www.ws.p15.students.nomoreparties.site/'],
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
 
 // Logs all requests to the server
 app.use(requestLogger);
