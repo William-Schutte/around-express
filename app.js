@@ -3,6 +3,7 @@ const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
 const { errors } = require('celebrate');
+const bodyParser = require('body-parser');
 const usersRouter = require('./routes/users.js');
 const cardsRouter = require('./routes/cards.js');
 const { login, createUser } = require('./controllers/users');
@@ -28,8 +29,8 @@ app.get('/crash-test', () => {
   }, 0);
 });
 // These are the default routes and do not require a user to be logged in, i.e. auth
-app.post('/signin', login);
-app.post('/signup', createUser);
+app.post('/signin', bodyParser.json(), login);
+app.post('/signup', bodyParser.json(), createUser);
 
 // The following routes WILL require a user to be logged in and authenticated
 app.use(auth);
