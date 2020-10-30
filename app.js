@@ -21,6 +21,12 @@ mongoose.connect('mongodb://localhost:27017/aroundb', {
 // Logs all requests to the server
 app.use(requestLogger);
 
+// Server crash testing function for review
+app.get('/crash-test', () => {
+  setTimeout(() => {
+    throw new Error('server will crash now');
+  }, 0);
+});
 // These are the default routes and do not require a user to be logged in, i.e. auth
 app.post('/signin', login);
 app.post('/signup', createUser);
