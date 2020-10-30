@@ -22,7 +22,8 @@ mongoose.connect('mongodb://localhost:27017/aroundb', {
 
 // Logs all requests to the server
 app.use(requestLogger);
-app.use(cors());
+app.options('*', cors());
+
 // Server crash testing function for review
 app.get('/crash-test', () => {
   setTimeout(() => {
