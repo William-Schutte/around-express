@@ -28,7 +28,7 @@ const createUser = (req, res, next) => {
 
   bcrypt.hash(req.body.password, 10).then((hash) => {
     User.create({ name, about, avatar, email, password: hash })
-      .then(((user) => res.send({ data: user })))
+      .then(((user) => res.status(201).send({ data: user })))
       .catch(next);
   });
 };
@@ -43,7 +43,7 @@ const login = (req, res, next) => {
         { expiresIn: '7d' },
       );
       res.cookie('token', token, { httpOnly: true });
-      res.send({ token });
+      res.status(201).send({ token });
     })
     .catch(next);
 };
