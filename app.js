@@ -22,9 +22,10 @@ mongoose.connect('mongodb://localhost:27017/aroundb', {
 
 const corsOptions = {
   origin: (/https:\/\/(www\.)?ws\.p15\.students\.nomoreparties\.site\S*/gm),
+  allowedHeaders: ['Content-type', 'Authorization'],
 };
 
-//app.options('*', cors(corsOptions));
+app.use(cors(corsOptions));
 
 // Logs all requests to the server
 app.use(requestLogger);
@@ -36,7 +37,7 @@ app.get('/crash-test', () => {
   }, 0);
 });
 // These are the default routes and do not require a user to be logged in, i.e. auth
-app.post('/signin', cors(), bodyParser.json(), login);
+app.post('/signin', bodyParser.json(), login);
 app.post('/signup', bodyParser.json(), createUser);
 
 // The following routes WILL require a user to be logged in and authenticated
