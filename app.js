@@ -21,7 +21,7 @@ mongoose.connect('mongodb://localhost:27017/aroundb', {
 });
 
 const corsOptions = {
-  origin: (/https:\/\/(www\.)?ws\.p15\.students\.nomoreparties\.site\S*/gm),
+  origin: /https:\/\/(www\.)?ws\.p15\.students\.nomoreparties\.site\S*/,
   allowedHeaders: ['Content-type', 'Authorization'],
 };
 
