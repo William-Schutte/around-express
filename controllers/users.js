@@ -63,10 +63,10 @@ const updateUser = (req, res, next) => {
 
 const updateAvatar = (req, res, next) => {
   const { avatar } = req.body;
-  User.findByIdAndUpdate(req.user._id, { avatar })
+  User.findByIdAndUpdate(req.user._id, { avatar }, { new: true })
     .then((user) => {
       if (user) {
-        res.send({ data: user });
+        res.status(200).send({ data: user });
       } else {
         throw new NotFoundError('User not found');
       }
