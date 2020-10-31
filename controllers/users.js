@@ -5,8 +5,8 @@ const NotFoundError = require('../errors/notfound-err');
 
 // Is this function necessary anymore?
 const getUser = (req, res, next) => {
-  User.find({})
-    .then((users) => res.send({ reqUser: req.user, data: users }))
+  User.findById(req.user._id)
+    .then((user) => res.send({ data: user }))
     .catch(next);
 };
 
