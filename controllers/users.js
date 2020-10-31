@@ -3,13 +3,13 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const NotFoundError = require('../errors/notfound-err');
 
-// Is this function necessary anymore?
 const getUser = (req, res, next) => {
   User.findById(req.user._id)
     .then((user) => res.send({ data: user }))
     .catch(next);
 };
 
+// Is this function necessary anymore?
 const getUserById = (req, res, next) => {
   User.findById(req.params.id)
     .then((user) => {
@@ -53,7 +53,7 @@ const updateUser = (req, res, next) => {
   User.findByIdAndUpdate(req.user._id, { name, about })
     .then((user) => {
       if (user) {
-        res.send({ data: user });
+        res.status(200).send({ data: user });
       } else {
         throw new NotFoundError('User not found');
       }
