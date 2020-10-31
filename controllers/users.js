@@ -4,8 +4,8 @@ const User = require('../models/user');
 const NotFoundError = require('../errors/notfound-err');
 
 // Is this function necessary anymore?
-const getUsers = (req, res, next) => {
-  User.find({})
+const getUser = (req, res, next) => {
+  User.find({ email: req.user.email })
     .then((users) => res.send({ data: users }))
     .catch(next);
 };
@@ -75,7 +75,7 @@ const updateAvatar = (req, res, next) => {
 };
 
 module.exports = {
-  getUsers,
+  getUser,
   getUserById,
   createUser,
   login,

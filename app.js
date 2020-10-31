@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const { errors } = require('celebrate');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const usersRouter = require('./routes/users.js');
+const userRouter = require('./routes/user.js');
 const cardsRouter = require('./routes/cards.js');
 const { login, createUser } = require('./controllers/users');
 const auth = require('./middleware/auth');
@@ -43,7 +43,7 @@ app.post('/signup', bodyParser.json(), createUser);
 // The following routes WILL require a user to be logged in and authenticated
 app.use(auth);
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/users', usersRouter);
+app.use('/user', userRouter);
 app.use('/cards', cardsRouter);
 app.get('*', (req, res) => {
   res.status(404).send({ message: 'Requested resource not found' });

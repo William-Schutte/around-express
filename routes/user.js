@@ -3,14 +3,14 @@ const bodyParser = require('body-parser');
 const { celebrate, Joi } = require('celebrate');
 
 const {
-  getUsers,
+  getUser,
   getUserById,
   updateUser,
   updateAvatar,
 } = require('../controllers/users');
 
-routes.get('/', getUsers);
-routes.get('/:id', getUserById);
+routes.get('/', getUser);
+routes.get('/:id ', getUserById);
 
 routes.patch('/me', bodyParser.json(), celebrate({
   body: Joi.object().keys({
