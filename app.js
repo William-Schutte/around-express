@@ -4,6 +4,7 @@ const path = require('path');
 const mongoose = require('mongoose');
 const { errors } = require('celebrate');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const usersRouter = require('./routes/users.js');
 const cardsRouter = require('./routes/cards.js');
@@ -22,7 +23,6 @@ mongoose.connect('mongodb://localhost:27017/aroundb', {
 
 const corsOptions = {
   origin: (/https:\/\/(www\.)?ws\.p15\.students\.nomoreparties\.site\S*/gm),
-  credentials: true,
 };
 
 app.use(cors(corsOptions));
