@@ -4,13 +4,11 @@ const { celebrate, Joi } = require('celebrate');
 
 const {
   getUser,
-  getUserById,
   updateUser,
   updateAvatar,
 } = require('../controllers/users');
 
 routes.get('/', getUser);
-routes.get('/:id ', getUserById);
 
 routes.patch('/me', bodyParser.json(), celebrate({
   body: Joi.object().keys({

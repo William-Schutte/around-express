@@ -9,19 +9,6 @@ const getUser = (req, res, next) => {
     .catch(next);
 };
 
-// Is this function necessary anymore?
-const getUserById = (req, res, next) => {
-  User.findById(req.params.id)
-    .then((user) => {
-      if (user) {
-        res.send({ data: user });
-      } else {
-        throw new NotFoundError('User not found');
-      }
-    })
-    .catch(next);
-};
-
 // Error handling?
 const createUser = (req, res, next) => {
   const { name, about, avatar, email } = req.body;
@@ -43,7 +30,7 @@ const login = (req, res, next) => {
         { expiresIn: '7d' },
       );
       res.cookie('token', token, { httpOnly: true });
-      res.status(201).send({ token });
+      res.status(201).send({ token, user });
     })
     .catch(next);
 };
