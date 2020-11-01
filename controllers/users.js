@@ -30,7 +30,15 @@ const login = (req, res, next) => {
         { expiresIn: '7d' },
       );
       res.cookie('token', token, { httpOnly: true });
-      res.status(201).send({ token, user });
+      res.status(201).send({
+        token,
+        user: {
+          name: user.name,
+          about: user.about,
+          avatar: user.avatar,
+          email: user.email,
+        },
+      });
     })
     .catch(next);
 };
