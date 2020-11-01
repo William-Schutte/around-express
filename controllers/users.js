@@ -63,7 +63,6 @@ const updateAvatar = (req, res, next) => {
 
 module.exports = {
   getUser,
-  getUserById,
   createUser,
   login,
   updateUser,
