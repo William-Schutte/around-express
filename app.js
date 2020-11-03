@@ -50,7 +50,7 @@ app.get('*', (req, res) => {
 });
 
 app.use(errorLogger);
-app.use(errors());
+// app.use(errors());
 app.use((err, req, res, next) => {
   let { statusCode = 500, message } = err;
   if (isCelebrateError(err)) {
