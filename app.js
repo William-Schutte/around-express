@@ -2,7 +2,7 @@
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
-const { errors } = require('celebrate');
+const { errors, isCelebrateError } = require('celebrate');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const userRouter = require('./routes/user.js');
@@ -52,7 +52,11 @@ app.get('*', (req, res) => {
 app.use(errorLogger);
 app.use(errors());
 app.use((err, req, res, next) => {
-  const { statusCode = 500, message } = err;
+  let { statusCode = 500, message } = err;
+  if (isCelebrateError(err)) {
+    statusCode = 400;
+    message = 'Invalid input. Validation error.';
+  }
   res.status(statusCode).send({
     message: (statusCode === 500) ? 'Server error' : message,
   });

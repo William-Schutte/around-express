@@ -37,6 +37,9 @@ Mongoose used for models and MongoDB interactions.
 
 # Revisions:
 
+## Project 15: First Review: 11/2/20
+* Altered centralized error handler to catch and properly label Celebrate errors.
+
 ## Project 13: First Review: 9/21/20
 * Added period to middle of URL regex to catch more invalid URLs
 * Explicitly defined error handling in createCard and createUser functions
