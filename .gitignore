@@ -4,7 +4,7 @@ logs
 npm-debug.log*
 
 # JWT
-.env
+*.env
 
 # Dependency directory
 node_modules
